@@ -1,0 +1,64 @@
+"use client";
+
+import { Card } from "@repo/ui/card";
+import { TextInput } from "@repo/ui/textinput";
+import { Button } from "@repo/ui/button";
+import { Center } from "@repo/ui/center";
+import { useState } from "react";
+import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
+import { useRouter } from "next/navigation";
+
+export function SendCard() {
+  const [number, setNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const navigate = useRouter();
+
+  return (
+    <div className="h-[90vh]">
+      <Center>
+        <Card title="Send">
+          <div className="min-w-72 pt-2">
+            <TextInput
+              placeholder={"Number"}
+              label="Number"
+              onChange={(value) => {
+                setNumber(value);
+              }}
+            />
+
+            <TextInput
+              placeholder={"Amount"}
+              label="Amount"
+              onChange={(value) => {
+                setAmount(value);
+              }}
+            />
+
+            <div className="pt-4 flex justify-center">
+              <Button
+                onClick={async () => {
+                    const rupeeAmount = Number(amount);
+                    const result = await p2pTransfer(number, rupeeAmount * 100);
+                    console.log(result.success);
+                    if (!result.success) {
+                      navigate.push(
+                        `/transferfailed?amount=${encodeURIComponent(rupeeAmount)}&reason=${encodeURIComponent(result.reason)}`,
+                      );
+                      return;
+                    }
+
+                    navigate.push(
+                      `/transfersuccess?amount=${encodeURIComponent(rupeeAmount)}`,
+                    );
+                }}
+              >
+                Send
+              </Button>
+
+            </div>
+          </div>
+        </Card>
+      </Center>
+    </div>
+  );
+}
