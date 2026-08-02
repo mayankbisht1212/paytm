@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Check Out Repo
       uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'  # If you have submodules, this will ensure they are checked out as well
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
