@@ -3,15 +3,13 @@ name: Build on PR
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: 'recursive'  # If you have submodules, this will ensure they are checked out as well
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:

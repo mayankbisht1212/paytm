@@ -1,8 +1,0 @@
-cd /Users/mayankbisht/Documents/paytm
-
-git config -f .gitmodules submodule.apps/user-app.path apps/user-app
-git config -f .gitmodules submodule.apps/user-app.url https://github.com/mayankbisht1212/paytm.git
-
-git add .gitmodules
-git commit -m "Configure user app submodule"
-git push
